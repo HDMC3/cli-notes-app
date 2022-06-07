@@ -62,21 +62,7 @@ namespace Cli.Application
             switch (option.Code)
             {
                 case MainMenuOptions.ShowNotebooks:
-                    
-                    var getNotebooks = _serviceProvider.GetService<GetNotebooks>();
-                    AnsiConsole.Clear();
-                    if (getNotebooks != null)
-                    {
-                        var notebooks = new List<Notebook>();
-                        await AnsiConsole.Status()
-                            .Spinner(Spinner.Known.SquareCorners)
-                            .SpinnerStyle(Style.Parse("green"))
-                            .StartAsync("Cargando libretas...", async (ctx) =>
-                            {
-                                notebooks = await getNotebooks.Get();
-                            });
-                        await ShowNotebookList(notebooks);
-                    }
+                    await ShowNotebookList();
                     break;
                 case MainMenuOptions.CreateNotebook:
                     AnsiConsole.Write("Creacion de libreta");
@@ -99,9 +85,22 @@ namespace Cli.Application
             }
         }
 
-        public async Task ShowNotebookList(ICollection<Notebook> notebooks)
+        public async Task ShowNotebookList()
         {
+            var getNotebooks = _serviceProvider.GetService<GetNotebooks>();
             AnsiConsole.Clear();
+            var notebooks = new List<Notebook>();
+            if (getNotebooks != null)
+            {
+                await AnsiConsole.Status()
+                    .Spinner(Spinner.Known.SquareCorners)
+                    .SpinnerStyle(Style.Parse("green"))
+                    .StartAsync("Cargando libretas...", async (ctx) =>
+                    {
+                        notebooks = await getNotebooks.Get();
+                    });
+            }
+
             AnsiConsole.WriteLine();
             var rule = new Rule("LIBRETAS");
             rule.Alignment = Justify.Left;
@@ -117,7 +116,7 @@ namespace Cli.Application
 
             if (option.Value != null)
             {
-                AnsiConsole.MarkupInterpolated($"Lista de notas de la libreta");
+                await ShowNotebookOptions(option.Value.Name);
             }
             else
             {
@@ -127,5 +126,51 @@ namespace Cli.Application
                 }
             }
         }
+
+        public async Task ShowNotebookOptions(string notebookName)
+        {
+            AnsiConsole.Clear();
+            AnsiConsole.WriteLine();
+            var rule = new Rule("LIBRETAS > " + notebookName);
+            rule.Alignment = Justify.Left;
+            AnsiConsole.Write(rule);
+            AnsiConsole.WriteLine();
+
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<OptionMenu<NotebookOptions, Object>>()
+                    .UseConverter(t => t.Text)
+                    .AddChoices(
+                        new OptionMenu<NotebookOptions, Object>("Ver notas", NotebookOptions.ShowNotes),
+                        new OptionMenu<NotebookOptions, Object>("Editar nota", NotebookOptions.EditNote),
+                        new OptionMenu<NotebookOptions, Object>("Eliminar nota", NotebookOptions.DeleteNote),
+                        new OptionMenu<NotebookOptions, Object>("Regresar", NotebookOptions.BackNotebookList)
+                    )
+            );
+
+            await SelectNotebookOption(option);
+        }
+
+        public async Task SelectNotebookOption(OptionMenu<NotebookOptions, Object> option)
+        {
+            switch (option.Code)
+            {
+                case NotebookOptions.ShowNotes:
+                    AnsiConsole.Write("Mostrar notas de libreta");
+                    break;
+                case NotebookOptions.EditNote:
+                    AnsiConsole.Write("Edicion de nota");
+                    break;
+                case NotebookOptions.DeleteNote:
+                    AnsiConsole.Write("Eliminacion de nota");
+                    break;
+                case NotebookOptions.BackNotebookList:
+                    await ShowNotebookList();
+                    break;
+                default:
+                    AnsiConsole.Write("Opcion invalida");
+                    break;
+            }
+        }
+
     }
 }
