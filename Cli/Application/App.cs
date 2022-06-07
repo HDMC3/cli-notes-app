@@ -9,11 +9,9 @@ namespace Cli.Application
     public class App
     {
         private IServiceProvider _serviceProvider;
-        private bool Exit;
         public App(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            Exit = false;
         }
 
         public async Task Run()
@@ -26,20 +24,14 @@ namespace Cli.Application
             Thread.Sleep(3000);
             AnsiConsole.Clear();
 
-            // while(!Exit) {
-            // }
             await ShowMainMenu();
         }
 
         public async Task ShowMainMenu()
         {
             AnsiConsole.Clear();
-            AnsiConsole.WriteLine();
 
-            var rule = new Rule("MENU PRINCIPAL");
-            rule.Alignment = Justify.Left;
-            AnsiConsole.Write(rule);
-            AnsiConsole.WriteLine();
+            Helpers.WriteRuleWidget("MENU PRINCIPAL");
 
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<MainMenuOptions, Object>>()
@@ -101,11 +93,8 @@ namespace Cli.Application
                     });
             }
 
-            AnsiConsole.WriteLine();
-            var rule = new Rule("LIBRETAS");
-            rule.Alignment = Justify.Left;
-            AnsiConsole.Write(rule);
-            AnsiConsole.WriteLine();
+            Helpers.WriteRuleWidget("LIBRETAS");
+
             var options = notebooks.Select(n => new OptionMenu<ListOptions, Notebook>(n.Name, ListOptions.Item, n)).ToList();
             options.Add(new OptionMenu<ListOptions, Notebook>("Regresar", ListOptions.Back));
             var option = AnsiConsole.Prompt(
@@ -130,11 +119,8 @@ namespace Cli.Application
         public async Task ShowNotebookOptions(string notebookName)
         {
             AnsiConsole.Clear();
-            AnsiConsole.WriteLine();
-            var rule = new Rule("LIBRETAS > " + notebookName);
-            rule.Alignment = Justify.Left;
-            AnsiConsole.Write(rule);
-            AnsiConsole.WriteLine();
+
+            Helpers.WriteRuleWidget("LIBRETAS > " + notebookName);
 
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<NotebookOptions, Object>>()
