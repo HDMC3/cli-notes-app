@@ -7,4 +7,9 @@ namespace Cli.Common {
         SearchNote,
         Exit
     }
+
+    public enum ListOptions {
+        Item,
+        Back
+    }
 }
