@@ -6,12 +6,6 @@ namespace Cli.Views
 {
     public class HomeView
     {
-        private IServiceProvider _serviceProvider;
-        public HomeView(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
-
         public ViewData ShowView()
         {
             AnsiConsole.Clear();
