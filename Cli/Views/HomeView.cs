@@ -35,8 +35,7 @@ namespace Cli.Views
                 case MainMenuOptions.ShowNotebooks:
                     return new ViewData(ViewCodes.NotebookListViewCode);
                 case MainMenuOptions.CreateNotebook:
-                    AnsiConsole.Write("Creacion de libreta");
-                    return new ViewData(ViewCodes.ExitApp);
+                    return new ViewData(ViewCodes.CreateNotebookViewCode);
                 case MainMenuOptions.EditNotebook:
                     AnsiConsole.Write("Edicion de libreta");
                     return new ViewData(ViewCodes.ExitApp);

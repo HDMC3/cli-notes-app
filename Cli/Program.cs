@@ -18,6 +18,7 @@ namespace Cli {
             services.AddSingleton(client);
             services.AddScoped<GetNotebooks>();
             services.AddScoped<GetNotes>();
+            services.AddScoped<CreateNotebook>();
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             var app = new App(serviceProvider);

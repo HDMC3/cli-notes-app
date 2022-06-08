@@ -25,10 +25,12 @@ namespace Cli.Common {
     public enum ViewCodes {
         HomeViewCode,
         NotebookListViewCode,
+        CreateNotebookViewCode,
         NoteOptionsViewCode,
         NotebookNotesViewCode,
         NoteDetailViewCode,
         InvalidView,
-        ExitApp
+        ExitApp,
+        ErrorView
     }
 }

@@ -26,9 +26,11 @@ namespace Cli.Application
 
             var homeView = new HomeView();
             var notebookListView = new NotebookListView(_serviceProvider);
+            var createNotebookView = new CreateNotebookView(_serviceProvider);
             var notebookNotesView = new NotebookNotesView(_serviceProvider);
             var noteDetailView = new NoteDetailView();
             var noteOptionsView = new NoteOptionsView();
+            var errorView = new ErrorView();
 
             ViewData viewSelected = homeView.ShowView();
             
@@ -55,6 +57,14 @@ namespace Cli.Application
 
                     if (viewSelected.Code == ViewCodes.NotebookListViewCode) {
                         viewSelected = await notebookListView.ShowView();
+                    }
+
+                    if (viewSelected.Code == ViewCodes.CreateNotebookViewCode) {
+                        viewSelected = await createNotebookView.ShowView();
+                    }
+
+                    if (viewSelected.Code == ViewCodes.ErrorView) {
+                        viewSelected = errorView.ShowView();
                     }
                 }
             }
