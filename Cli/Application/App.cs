@@ -183,7 +183,7 @@ namespace Cli.Application
 
             var options = notes.Select(n => new OptionMenu<ListOptions, Note>(n.Title, ListOptions.Item, n)).ToList();
             options.Add(new OptionMenu<ListOptions, Note>("Regresar a lista de libretas", ListOptions.Back));
-            options.Add(new OptionMenu<ListOptions, Note>("Menu principal", ListOptions.Back));
+            options.Add(new OptionMenu<ListOptions, Note>("Menu principal", ListOptions.BackMainMenu));
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<ListOptions, Note>>()
                     .PageSize(10)
@@ -198,9 +198,9 @@ namespace Cli.Application
             else
             {
                 if (option.Code == ListOptions.Back)
-                {
+                    await ShowNotebookList();
+                if (option.Code == ListOptions.BackMainMenu)
                     await ShowMainMenu();
-                }
             }
         }
 

@@ -10,6 +10,7 @@ namespace Cli.Common {
 
     public enum ListOptions {
         Item,
+        BackMainMenu,
         Back
     }
 
