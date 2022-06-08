@@ -21,4 +21,14 @@ namespace Cli.Common {
         BackNotebookList,
         BackMainMenu
     }
+
+    public enum ViewCodes {
+        HomeViewCode,
+        NotebookListViewCode,
+        NoteOptionsViewCode,
+        NotebookNotesViewCode,
+        NoteDetailViewCode,
+        InvalidView,
+        ExitApp
+    }
 }
