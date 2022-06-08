@@ -17,6 +17,7 @@ namespace Cli {
             var client = await Supabase.Client.InitializeAsync(config["DB:url"], config["DB:key"]);
             services.AddSingleton(client);
             services.AddScoped<GetNotebooks>();
+            services.AddScoped<GetNotes>();
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             var app = new App(serviceProvider);

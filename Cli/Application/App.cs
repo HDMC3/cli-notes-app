@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Models;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 
 namespace Cli.Application
 {
@@ -20,7 +21,8 @@ namespace Cli.Application
             AnsiConsole.Write(
                 new FigletText("Cli Notes App")
                     .Alignment(Justify.Center)
-                    .Color(new Color(211, 221, 87)));
+                    .Color(Colors.primary)
+            );
             Thread.Sleep(3000);
             AnsiConsole.Clear();
 
@@ -105,7 +107,7 @@ namespace Cli.Application
 
             if (option.Value != null)
             {
-                await ShowNotebookOptions(option.Value.Name);
+                await ShowNotebookNotes(option.Value);
             }
             else
             {
@@ -116,46 +118,92 @@ namespace Cli.Application
             }
         }
 
-        public async Task ShowNotebookOptions(string notebookName)
+        public async Task ShowNoteOptions(Notebook notebook, Note note)
         {
             AnsiConsole.Clear();
 
-            Helpers.WriteRuleWidget("LIBRETAS > " + notebookName);
+            Helpers.WriteRuleWidget("OPCIONES | " + note.Title);
 
             var option = AnsiConsole.Prompt(
-                new SelectionPrompt<OptionMenu<NotebookOptions, Object>>()
+                new SelectionPrompt<OptionMenu<NoteOptions, Object>>()
                     .UseConverter(t => t.Text)
                     .AddChoices(
-                        new OptionMenu<NotebookOptions, Object>("Ver notas", NotebookOptions.ShowNotes),
-                        new OptionMenu<NotebookOptions, Object>("Editar nota", NotebookOptions.EditNote),
-                        new OptionMenu<NotebookOptions, Object>("Eliminar nota", NotebookOptions.DeleteNote),
-                        new OptionMenu<NotebookOptions, Object>("Regresar", NotebookOptions.BackNotebookList)
+                        new OptionMenu<NoteOptions, Object>("Ver nota", NoteOptions.ShowNote),
+                        new OptionMenu<NoteOptions, Object>("Editar nota", NoteOptions.EditNote),
+                        new OptionMenu<NoteOptions, Object>("Eliminar nota", NoteOptions.DeleteNote),
+                        new OptionMenu<NoteOptions, Object>("Regresar a lista de notas", NoteOptions.BackNotebookList),
+                        new OptionMenu<NoteOptions, Object>("Menu principal", NoteOptions.BackMainMenu)
                     )
             );
 
-            await SelectNotebookOption(option);
+            await SelectNoteOption(option, notebook);
         }
 
-        public async Task SelectNotebookOption(OptionMenu<NotebookOptions, Object> option)
+        public async Task SelectNoteOption(OptionMenu<NoteOptions, Object> option, Notebook notebook)
         {
             switch (option.Code)
             {
-                case NotebookOptions.ShowNotes:
-                    AnsiConsole.Write("Mostrar notas de libreta");
+                case NoteOptions.ShowNote:
+                    AnsiConsole.Write("Ver nota");
                     break;
-                case NotebookOptions.EditNote:
+                case NoteOptions.EditNote:
                     AnsiConsole.Write("Edicion de nota");
                     break;
-                case NotebookOptions.DeleteNote:
+                case NoteOptions.DeleteNote:
                     AnsiConsole.Write("Eliminacion de nota");
                     break;
-                case NotebookOptions.BackNotebookList:
-                    await ShowNotebookList();
+                case NoteOptions.BackNotebookList:
+                    await ShowNotebookNotes(notebook);
+                    break;
+                case NoteOptions.BackMainMenu:
+                    await ShowMainMenu();
                     break;
                 default:
                     AnsiConsole.Write("Opcion invalida");
                     break;
             }
+        }
+
+        public async Task ShowNotebookNotes(Notebook notebook)
+        {
+            var getNotes = _serviceProvider.GetService<GetNotes>();
+            AnsiConsole.Clear();
+            var notes = new List<Note>();
+            if (getNotes != null)
+            {
+                await AnsiConsole.Status()
+                    .Spinner(Spinner.Known.SquareCorners)
+                    .SpinnerStyle(Style.Parse("green"))
+                    .StartAsync("Cargando notas...", async (ctx) =>
+                    {
+                        notes = await getNotes.Get(notebook.Id);
+                    });
+            }
+
+            Helpers.WriteRuleWidget("NOTAS | " + notebook.Name);
+
+            var options = notes.Select(n => new OptionMenu<ListOptions, Note>(n.Title, ListOptions.Item, n)).ToList();
+            options.Add(new OptionMenu<ListOptions, Note>("Regresar a lista de libretas", ListOptions.Back));
+            options.Add(new OptionMenu<ListOptions, Note>("Menu principal", ListOptions.Back));
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<OptionMenu<ListOptions, Note>>()
+                    .PageSize(10)
+                    .UseConverter(t => t.Text)
+                    .AddChoices(options)
+            );
+
+            if (option.Value != null)
+            {
+                await ShowNoteOptions(notebook, option.Value);
+            }
+            else
+            {
+                if (option.Code == ListOptions.Back)
+                {
+                    await ShowMainMenu();
+                }
+            }
+
         }
 
     }

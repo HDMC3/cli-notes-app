@@ -13,10 +13,11 @@ namespace Cli.Common {
         Back
     }
 
-    public enum  NotebookOptions {
-        ShowNotes,
+    public enum  NoteOptions {
+        ShowNote,
         EditNote,
         DeleteNote,
-        BackNotebookList
+        BackNotebookList,
+        BackMainMenu
     }
 }
