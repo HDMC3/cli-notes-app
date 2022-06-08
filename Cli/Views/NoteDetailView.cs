@@ -5,7 +5,7 @@ using Spectre.Console;
 
 namespace Cli.Views {
     public class NoteDetailView {
-        public ViewData ShowView(NoteDetailViewData data) {
+        public ViewData ShowView(NoteDetailViewDataType data) {
             AnsiConsole.Clear();
             Helpers.WriteRuleWidget(data.Note.Title + " | " + data.Notebook.Name);
             AnsiConsole.Write(new Markup("Titulo:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
@@ -27,7 +27,7 @@ namespace Cli.Views {
             );
 
             if (option.Item2 == 1) {
-                var noteOptionsViewData = new NoteOptionsViewData(data.Notebook, data.Note);
+                var noteOptionsViewData = new NoteOptionsViewDataType(data.Notebook, data.Note);
                 return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
             }
             else if (option.Item2 == 2)

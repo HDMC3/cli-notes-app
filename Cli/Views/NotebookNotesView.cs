@@ -13,7 +13,7 @@ namespace Cli.Views {
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<ViewData> ShowView(NotebookNotesViewData data) {
+        public async Task<ViewData> ShowView(NotebookNotesViewDataType data) {
             var getNotes = _serviceProvider.GetService<GetNotes>();
             AnsiConsole.Clear();
             var notes = new List<Note>();
@@ -42,7 +42,7 @@ namespace Cli.Views {
 
             if (option.Value != null)
             {
-                var noteOptionsViewData = new NoteOptionsViewData(data.Notebook, option.Value);
+                var noteOptionsViewData = new NoteOptionsViewDataType(data.Notebook, option.Value);
                 return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
             }
             else

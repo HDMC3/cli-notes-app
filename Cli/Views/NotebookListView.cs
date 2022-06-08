@@ -40,7 +40,7 @@ namespace Cli.Views {
 
             if (option.Value != null)
             {
-                var notebookNotesViewData = new NotebookNotesViewData(option.Value);
+                var notebookNotesViewData = new NotebookNotesViewDataType(option.Value);
                 return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
             }
             else

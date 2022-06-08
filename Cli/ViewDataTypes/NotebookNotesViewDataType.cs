@@ -1,9 +1,9 @@
 using Services.Models;
 
 namespace Cli.ViewDataTypes {
-    public class NotebookNotesViewData : IViewDataType {
+    public class NotebookNotesViewDataType : IViewDataType {
         public Notebook Notebook;
-        public NotebookNotesViewData(Notebook notebook) {
+        public NotebookNotesViewDataType(Notebook notebook) {
             Notebook = notebook;
         }
     }

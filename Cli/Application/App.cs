@@ -35,17 +35,17 @@ namespace Cli.Application
             while(viewSelected.Code != ViewCodes.ExitApp && viewSelected.Code != ViewCodes.InvalidView) {
                 if (viewSelected.Data != null) {
                     if (viewSelected.Code == ViewCodes.NotebookNotesViewCode) {
-                        var data = viewSelected.Data as NotebookNotesViewData;
+                        var data = viewSelected.Data as NotebookNotesViewDataType;
                         viewSelected = await notebookNotesView.ShowView(data!);
                     }
 
                     if (viewSelected.Code == ViewCodes.NoteDetailViewCode) {
-                        var data = viewSelected.Data as NoteDetailViewData;
+                        var data = viewSelected.Data as NoteDetailViewDataType;
                         viewSelected = noteDetailView.ShowView(data!);
                     }
 
                     if (viewSelected.Code == ViewCodes.NoteOptionsViewCode) {
-                        var data = viewSelected.Data as NoteOptionsViewData;
+                        var data = viewSelected.Data as NoteOptionsViewDataType;
                         viewSelected = noteOptionsView.ShowView(data!);
                     }
                 } else {

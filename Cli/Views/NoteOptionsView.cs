@@ -6,7 +6,7 @@ using Spectre.Console;
 
 namespace Cli.Views {
     public class NoteOptionsView {
-        public ViewData ShowView(NoteOptionsViewData data) {
+        public ViewData ShowView(NoteOptionsViewDataType data) {
             AnsiConsole.Clear();
 
             Helpers.WriteRuleWidget("OPCIONES | " + data.Note.Title);
@@ -31,7 +31,7 @@ namespace Cli.Views {
             switch (option.Code)
             {
                 case NoteOptions.ShowNote:
-                    var noteDetailViewData = new NoteDetailViewData(notebook, note);
+                    var noteDetailViewData = new NoteDetailViewDataType(notebook, note);
                     return new ViewData(ViewCodes.NoteDetailViewCode, noteDetailViewData);
                 case NoteOptions.EditNote:
                     AnsiConsole.Write("Edicion de nota");
@@ -40,7 +40,7 @@ namespace Cli.Views {
                     AnsiConsole.Write("Eliminacion de nota");
                     return new ViewData(ViewCodes.ExitApp);
                 case NoteOptions.BackNotebookList:
-                    var notebookNotesViewData = new NotebookNotesViewData(notebook);
+                    var notebookNotesViewData = new NotebookNotesViewDataType(notebook);
                     return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
                 case NoteOptions.BackMainMenu:
                     return new ViewData(ViewCodes.HomeViewCode);
