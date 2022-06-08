@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Models;
 using Spectre.Console;
-using Spectre.Console.Rendering;
 
 namespace Cli.Application
 {
@@ -136,15 +135,15 @@ namespace Cli.Application
                     )
             );
 
-            await SelectNoteOption(option, notebook);
+            await SelectNoteOption(option, notebook, note);
         }
 
-        public async Task SelectNoteOption(OptionMenu<NoteOptions, Object> option, Notebook notebook)
+        public async Task SelectNoteOption(OptionMenu<NoteOptions, Object> option, Notebook notebook, Note note)
         {
             switch (option.Code)
             {
                 case NoteOptions.ShowNote:
-                    AnsiConsole.Write("Ver nota");
+                    await ShowNote(notebook, note);
                     break;
                 case NoteOptions.EditNote:
                     AnsiConsole.Write("Edicion de nota");
@@ -203,7 +202,33 @@ namespace Cli.Application
                     await ShowMainMenu();
                 }
             }
+        }
 
+        public async Task ShowNote(Notebook notebook, Note note) {
+            AnsiConsole.Clear();
+            Helpers.WriteRuleWidget(note.Title + " | " + notebook.Name);
+            AnsiConsole.Write(new Markup("Titulo:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
+            AnsiConsole.WriteLine(note.Title + "\n");
+            AnsiConsole.Write(new Markup("Descripcion:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
+            AnsiConsole.WriteLine(note.Description + "\n");
+            AnsiConsole.Write(new Markup("Fecha de creacion:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
+            AnsiConsole.WriteLine(note.CreatedAt.ToString() + "\n");
+            
+            AnsiConsole.WriteLine();
+
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<(string, int)>()
+                    .UseConverter(opt => opt.Item1)
+                    .AddChoices(
+                        ("Regresa a opciones de nota", 1),
+                        ("Menu principal", 2)
+                    )
+            );
+
+            if (option.Item2 == 1)
+                await ShowNoteOptions(notebook, note);
+            if (option.Item2 == 2)
+                await ShowMainMenu();
         }
 
     }
