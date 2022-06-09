@@ -24,13 +24,10 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.HomeViewCode);
 
             AnsiConsole.WriteLine();
-            var option = AnsiConsole.Prompt(
-                new SelectionPrompt<(string, int)>()
-                    .UseConverter(opt => opt.Item1)
-                    .AddChoices(
-                        ("Guardar", 1),
-                        ("Cancelar", 2)
-                    )
+
+            var option = Helpers.ConfirmationMenuPrompt(
+                ("Guardar", 1),
+                ("Cancelar", 2)
             );
 
             if (option.Item2 == 2)

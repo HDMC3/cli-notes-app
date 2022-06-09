@@ -9,14 +9,12 @@ namespace Cli.Views {
             panel.Border(BoxBorder.Double);
             panel.BorderStyle(new Style(foreground: Color.Red));
             AnsiConsole.Write(panel);
+            
             AnsiConsole.WriteLine();
-            var option = AnsiConsole.Prompt(
-                new SelectionPrompt<(string, int)>()
-                    .UseConverter(opt => opt.Item1)
-                    .AddChoices(
-                        ("Menu principal", 1),
-                        ("Salir", 2)
-                    )
+
+            var option = Helpers.ConfirmationMenuPrompt(
+                ("Menu principal", 1),
+                ("Salir", 2)
             );
 
             if (option.Item2 == 1)

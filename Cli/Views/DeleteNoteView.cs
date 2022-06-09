@@ -26,13 +26,9 @@ namespace Cli.Views {
 
             AnsiConsole.WriteLine();
 
-            var option = AnsiConsole.Prompt(
-                new SelectionPrompt<(string, int)>()
-                    .UseConverter(opt => opt.Item1)
-                    .AddChoices(
-                        ("Confirmar", 1),
-                        ("Cancelar", 2)
-                    )
+            var option = Helpers.ConfirmationMenuPrompt(
+                ("Confirmar", 1),
+                ("Cancelar", 2)
             );
 
             if (option.Item2 == 2) {

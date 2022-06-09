@@ -21,13 +21,9 @@ namespace Cli.Views {
             
             AnsiConsole.WriteLine();
 
-            var option = AnsiConsole.Prompt(
-                new SelectionPrompt<(string, int)>()
-                    .UseConverter(opt => opt.Item1)
-                    .AddChoices(
-                        ("Regresa a opciones de nota", 1),
-                        ("Menu principal", 2)
-                    )
+            var option = Helpers.ConfirmationMenuPrompt(
+                ("Regresar a opciones de nota", 1),
+                ("Menu principal", 2)
             );
 
             if (option.Item2 == 1) {

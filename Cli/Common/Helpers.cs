@@ -1,3 +1,4 @@
+using Postgrest;
 using Spectre.Console;
 
 namespace Cli.Common {
@@ -23,6 +24,14 @@ namespace Cli.Common {
         public static void WriteNotebookIndicator(string notebookName) {
             AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
             AnsiConsole.Write(new Markup(notebookName + " ---\n\n", new Style(foreground: Color.Grey, decoration: Decoration.Bold)));
+        }
+
+        public static (string, int) ConfirmationMenuPrompt(params (string, int)[] choices) {
+            return AnsiConsole.Prompt(
+                new SelectionPrompt<(string, int)>()
+                    .UseConverter(opt => opt.Item1)
+                    .AddChoices(choices)
+            );
         }
     }
 }
