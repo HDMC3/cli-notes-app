@@ -11,7 +11,13 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("BUSCAR NOTA");
 
-            var query = AnsiConsole.Ask<string>("Termino de busqueda:");
+            var query = AnsiConsole.Prompt(
+                new TextPrompt<string>("Termino de busqueda:")
+                    .AllowEmpty()
+            );
+
+            if (String.IsNullOrWhiteSpace(query)) 
+                return new ViewData(ViewCodes.HomeViewCode);
 
             AnsiConsole.WriteLine();
 
