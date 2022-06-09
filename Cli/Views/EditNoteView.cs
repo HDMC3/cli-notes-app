@@ -38,8 +38,8 @@ namespace Cli.Views {
             );
 
             if (String.IsNullOrWhiteSpace(title) && String.IsNullOrWhiteSpace(description)) {
-                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
-                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
+                var noteOptionsViewData = new NoteOptionsViewDataType(data.Notebook, data.Note);
+                return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
             }
                 
             AnsiConsole.WriteLine();
@@ -79,8 +79,8 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.ErrorView);
 
             } else {
-                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
-                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
+                var noteOptionsViewData = new NoteOptionsViewDataType(data.Notebook, data.Note);
+                return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
             }
             
         }
