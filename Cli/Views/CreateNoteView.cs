@@ -53,32 +53,32 @@ namespace Cli.Views {
             }
 
             var createNote = _serviceProvider.GetService<CreateNote>();
-            if (createNote != null) {
-                try
-                {
-                    await AnsiConsole.Status()
-                        .Spinner(Spinner.Known.SquareCorners)
-                        .SpinnerStyle(new Style(foreground: Colors.primary))
-                        .StartAsync("Guardando...", async (ctx) =>
-                        {
-                            await createNote.Create(
-                                new Note { 
-                                    Title = title, 
-                                    Description = description,
-                                    NotebookId = data.Notebook.Id
-                                }
-                            );
-                        });
-                    var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
-                    return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
-                }
-                catch (System.Exception)
-                {
-                    return new ViewData(ViewCodes.ErrorView);
-                }
-            }
 
-            return new ViewData(ViewCodes.ErrorView);
+            if (createNote == null)
+                return new ViewData(ViewCodes.ErrorView);
+
+            try
+            {
+                await AnsiConsole.Status()
+                    .Spinner(Spinner.Known.SquareCorners)
+                    .SpinnerStyle(new Style(foreground: Colors.primary))
+                    .StartAsync("Guardando...", async (ctx) =>
+                    {
+                        await createNote.Create(
+                            new Note { 
+                                Title = title, 
+                                Description = description,
+                                NotebookId = data.Notebook.Id
+                            }
+                        );
+                    });
+                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
+                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
+            }
         }
     }
 }

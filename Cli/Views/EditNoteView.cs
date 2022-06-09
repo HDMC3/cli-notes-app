@@ -19,7 +19,6 @@ namespace Cli.Views {
             Helpers.WriteRuleWidget("EDITAR NOTA");
 
             AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
-            // AnsiConsole.Write(new Markup("Libreta: ", new Style(foreground: Colors.primary)));
             AnsiConsole.Write(new Markup(data.Notebook.Name + " ---\n\n", new Style(foreground: Color.Grey, decoration: Decoration.Bold)));
             AnsiConsole.Write(new Markup("Titulo: ", new Style(foreground: Colors.primary)));
             AnsiConsole.Write(data.Note.Title + "\n");
@@ -27,7 +26,6 @@ namespace Cli.Views {
             AnsiConsole.Write(data.Note.Description + "\n");
             
             AnsiConsole.WriteLine();
-            // var title = AnsiConsole.Ask<string>("Nuevo titulo:");
             var title = AnsiConsole.Prompt(
                 new TextPrompt<string>("Nuevo titulo: ")
                     .AllowEmpty()
@@ -53,34 +51,32 @@ namespace Cli.Views {
                     )
             );
 
-            if (option.Item2 == 1) {
-                var editNote = _serviceProvider.GetService<EditNote>();
-                if (editNote != null) {
-                    try
-                    {
-                        await AnsiConsole.Status()
-                            .Spinner(Spinner.Known.SquareCorners)
-                            .SpinnerStyle(new Style(foreground: Colors.primary))
-                            .StartAsync("Guardando...", async (ctx) =>
-                            {
-                                data.Note.Title = String.IsNullOrWhiteSpace(title) ? data.Note.Title : title;
-                                data.Note.Description = String.IsNullOrWhiteSpace(description) ? data.Note.Description : description;
-                                await editNote.Edit(data.Note);
-                            });
-                        var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
-                        return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
-                    }
-                    catch (System.Exception)
-                    {
-                        return new ViewData(ViewCodes.ErrorView);
-                    }
-                }
-
-                return new ViewData(ViewCodes.ErrorView);
-
-            } else {
+            if (option.Item2 == 2) {
                 var noteOptionsViewData = new NoteOptionsViewDataType(data.Notebook, data.Note);
                 return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
+            }
+
+            var editNote = _serviceProvider.GetService<EditNote>();
+            if (editNote == null)
+                return new ViewData(ViewCodes.ErrorView);
+
+            try
+            {
+                await AnsiConsole.Status()
+                    .Spinner(Spinner.Known.SquareCorners)
+                    .SpinnerStyle(new Style(foreground: Colors.primary))
+                    .StartAsync("Guardando...", async (ctx) =>
+                    {
+                        data.Note.Title = String.IsNullOrWhiteSpace(title) ? data.Note.Title : title;
+                        data.Note.Description = String.IsNullOrWhiteSpace(description) ? data.Note.Description : description;
+                        await editNote.Edit(data.Note);
+                    });
+                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
+                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
             }
             
         }

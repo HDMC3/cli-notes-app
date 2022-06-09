@@ -39,32 +39,30 @@ namespace Cli.Views {
                     )
             );
 
-            if (option.Item2 == 1) {
-                var editNotebook = _serviceProvider.GetService<EditNotebook>();
-                if (editNotebook != null) {
-                    try
-                    {
-                        await AnsiConsole.Status()
-                            .Spinner(Spinner.Known.SquareCorners)
-                            .SpinnerStyle(new Style(foreground: Colors.primary))
-                            .StartAsync("Guardando...", async (ctx) =>
-                            {
-                                data.Notebook.Name = name;
-                                await editNotebook.Edit(data.Notebook);
-                            });
-                        return new ViewData(ViewCodes.HomeViewCode);
-                    }
-                    catch (System.Exception)
-                    {
-                        return new ViewData(ViewCodes.ErrorView);
-                    }
-                }
+            if (option.Item2 == 2)
+                return new ViewData(ViewCodes.HomeViewCode);
 
-                return new ViewData(ViewCodes.ExitApp);
-            } else {
+            var editNotebook = _serviceProvider.GetService<EditNotebook>();
+            
+            if (editNotebook == null)
+                return new ViewData(ViewCodes.ErrorView);
+
+            try
+            {
+                await AnsiConsole.Status()
+                    .Spinner(Spinner.Known.SquareCorners)
+                    .SpinnerStyle(new Style(foreground: Colors.primary))
+                    .StartAsync("Guardando...", async (ctx) =>
+                    {
+                        data.Notebook.Name = name;
+                        await editNotebook.Edit(data.Notebook);
+                    });
                 return new ViewData(ViewCodes.HomeViewCode);
             }
-
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
+            }
         }
     }
 }

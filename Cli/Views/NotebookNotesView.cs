@@ -46,21 +46,19 @@ namespace Cli.Views {
                 var noteOptionsViewData = new NoteOptionsViewDataType(data.Notebook, option.Value);
                 return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
             }
-            else
-            {
-                if (option.Code == ListOptions.Create){
-                    var createNoteViewData = new CreateNoteViewDataType(data.Notebook);
-                    return new ViewData(ViewCodes.CreateNoteViewCode, createNoteViewData);
-                }
-                else if (option.Code == ListOptions.Back) {
-                    var notebookListViewData = new NotebookListViewDataType(false);
-                    return new ViewData(ViewCodes.NotebookListViewCode, notebookListViewData);
-                }
-                else if (option.Code == ListOptions.BackMainMenu)
-                    return new ViewData(ViewCodes.HomeViewCode);
-                else 
-                    return new ViewData(ViewCodes.InvalidView);
+            
+            if (option.Code == ListOptions.Create){
+                var createNoteViewData = new CreateNoteViewDataType(data.Notebook);
+                return new ViewData(ViewCodes.CreateNoteViewCode, createNoteViewData);
             }
+            else if (option.Code == ListOptions.Back) {
+                var notebookListViewData = new NotebookListViewDataType(false);
+                return new ViewData(ViewCodes.NotebookListViewCode, notebookListViewData);
+            }
+            else if (option.Code == ListOptions.BackMainMenu)
+                return new ViewData(ViewCodes.HomeViewCode);
+            else 
+                return new ViewData(ViewCodes.InvalidView);
         }
     }
 }

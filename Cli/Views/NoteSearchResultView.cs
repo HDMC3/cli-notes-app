@@ -57,15 +57,13 @@ namespace Cli.Views {
                 var noteSearchedDetailViewData = new NoteSearchedDetailViewDataType(option.Value, data.Query);
                 return new ViewData(ViewCodes.NoteSearchedDetailViewCode, noteSearchedDetailViewData);
             }
-            else
-            {
-                if (option.Code == ListOptions.Back)
-                    return new ViewData(ViewCodes.SearchNoteViewCode);
-                else if (option.Code == ListOptions.BackMainMenu)
-                    return new ViewData(ViewCodes.HomeViewCode);
-                else 
-                    return new ViewData(ViewCodes.InvalidView);
-            }
+            
+            if (option.Code == ListOptions.Back)
+                return new ViewData(ViewCodes.SearchNoteViewCode);
+            else if (option.Code == ListOptions.BackMainMenu)
+                return new ViewData(ViewCodes.HomeViewCode);
+            else 
+                return new ViewData(ViewCodes.InvalidView);
         }
     }
 }

@@ -44,7 +44,6 @@ namespace Cli.Views
                     AnsiConsole.Clear();
                     return new ViewData(ViewCodes.ExitApp);
                 default:
-                    AnsiConsole.Write("Opcion invalida");
                     return new ViewData(ViewCodes.InvalidView);
             }
         }

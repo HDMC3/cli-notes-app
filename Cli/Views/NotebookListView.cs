@@ -46,14 +46,12 @@ namespace Cli.Views {
                     ? new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData) 
                     : new ViewData(ViewCodes.EditNotebookViewCode, editNotebookViewData);
             }
-            else
+            
+            if (option.Code == ListOptions.Back)
             {
-                if (option.Code == ListOptions.Back)
-                {
-                    return new ViewData(ViewCodes.HomeViewCode);
-                } else {
-                    return new ViewData(ViewCodes.InvalidView);
-                }
+                return new ViewData(ViewCodes.HomeViewCode);
+            } else {
+                return new ViewData(ViewCodes.InvalidView);
             }
         }
     }

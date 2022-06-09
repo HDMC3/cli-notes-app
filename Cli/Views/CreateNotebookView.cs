@@ -33,29 +33,27 @@ namespace Cli.Views {
                     )
             );
 
-            if (option.Item2 == 1) {
-                var createNotebook = _serviceProvider.GetService<CreateNotebook>();
-                if (createNotebook != null) {
-                    try
-                    {
-                        await AnsiConsole.Status()
-                            .Spinner(Spinner.Known.SquareCorners)
-                            .SpinnerStyle(new Style(foreground: Colors.primary))
-                            .StartAsync("Guardando...", async (ctx) =>
-                            {
-                                await createNotebook.Create(new Notebook { Name = name });
-                            });
-                        return new ViewData(ViewCodes.HomeViewCode);
-                    }
-                    catch (System.Exception)
-                    {
-                        return new ViewData(ViewCodes.ErrorView);
-                    }
-                }
-
-                return new ViewData(ViewCodes.ExitApp);
-            } else {
+            if (option.Item2 == 2)
                 return new ViewData(ViewCodes.HomeViewCode);
+
+            var createNotebook = _serviceProvider.GetService<CreateNotebook>();
+            if (createNotebook == null)
+                return new ViewData(ViewCodes.ErrorView);
+
+            try
+            {
+                await AnsiConsole.Status()
+                    .Spinner(Spinner.Known.SquareCorners)
+                    .SpinnerStyle(new Style(foreground: Colors.primary))
+                    .StartAsync("Guardando...", async (ctx) =>
+                    {
+                        await createNotebook.Create(new Notebook { Name = name });
+                    });
+                return new ViewData(ViewCodes.HomeViewCode);
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
             }
             
         }
