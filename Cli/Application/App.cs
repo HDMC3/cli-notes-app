@@ -37,6 +37,7 @@ namespace Cli.Application
             var noteSearchedDetailView = new NoteSearchedDetailView(_serviceProvider);
             var createNoteView = new CreateNoteView(_serviceProvider);
             var editNoteView = new EditNoteView(_serviceProvider);
+            var deleteNoteView = new DeleteNoteView(_serviceProvider);
 
             ViewData viewSelected = homeView.ShowView();
             
@@ -85,6 +86,11 @@ namespace Cli.Application
                     if (viewSelected.Code == ViewCodes.EditNoteViewCode) {
                         var data = viewSelected.Data as EditNoteViewDataType;
                         viewSelected = await editNoteView.ShowView(data!);
+                    }
+
+                    if (viewSelected.Code == ViewCodes.DeleteNoteViewCode) {
+                        var data = viewSelected.Data as DeleteNoteViewDataType;
+                        viewSelected = await deleteNoteView.ShowView(data!);
                     }
 
 
