@@ -32,6 +32,7 @@ namespace Cli.Application
             var noteOptionsView = new NoteOptionsView();
             var errorView = new ErrorView();
             var editNotebookView = new EditNotebookView(_serviceProvider);
+            var searchNoteView = new SearchNoteView(_serviceProvider);
 
             ViewData viewSelected = homeView.ShowView();
             
@@ -72,6 +73,10 @@ namespace Cli.Application
 
                     if (viewSelected.Code == ViewCodes.ErrorView) {
                         viewSelected = errorView.ShowView();
+                    }
+
+                    if (viewSelected.Code == ViewCodes.SearchNote) {
+                        viewSelected = await searchNoteView.ShowView();
                     }
                 }
             }

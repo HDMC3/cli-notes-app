@@ -20,6 +20,7 @@ namespace Cli {
             services.AddScoped<GetNotes>();
             services.AddScoped<CreateNotebook>();
             services.AddScoped<EditNotebook>();
+            services.AddScoped<SearchNote>();
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             var app = new App(serviceProvider);
