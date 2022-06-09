@@ -33,6 +33,7 @@ namespace Cli.Common {
         NoteOptionsViewCode,
         NotebookNotesViewCode,
         CreateNoteViewCode,
+        EditNoteViewCode,
         NoteDetailViewCode,
         InvalidView,
         ExitApp,

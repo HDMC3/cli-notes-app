@@ -34,8 +34,8 @@ namespace Cli.Views {
                     var noteDetailViewData = new NoteDetailViewDataType(notebook, note);
                     return new ViewData(ViewCodes.NoteDetailViewCode, noteDetailViewData);
                 case NoteOptions.EditNote:
-                    AnsiConsole.Write("Edicion de nota");
-                    return new ViewData(ViewCodes.ExitApp);
+                    var editNoteViewData = new EditNoteViewDataType(notebook, note);
+                    return new ViewData(ViewCodes.EditNoteViewCode, editNoteViewData);
                 case NoteOptions.DeleteNote:
                     AnsiConsole.Write("Eliminacion de nota");
                     return new ViewData(ViewCodes.ExitApp);
