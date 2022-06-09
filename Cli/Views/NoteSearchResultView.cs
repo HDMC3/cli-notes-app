@@ -43,8 +43,8 @@ namespace Cli.Views {
             AnsiConsole.WriteLine();
 
             var options = notes.Select(n => new OptionMenu<ListOptions, Note>(n.Title, ListOptions.Item, n)).ToList();
-            options.Add(new OptionMenu<ListOptions, Note>("Regresar a buscar nota", ListOptions.Back));
-            options.Add(new OptionMenu<ListOptions, Note>("Menu principal", ListOptions.BackMainMenu));
+            options.Add(new OptionMenu<ListOptions, Note>("\\Regresar a buscar nota", ListOptions.Back));
+            options.Add(new OptionMenu<ListOptions, Note>("\\Menu principal", ListOptions.BackMainMenu));
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<ListOptions, Note>>()
                     .PageSize(10)

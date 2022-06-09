@@ -31,7 +31,7 @@ namespace Cli.Views {
             Helpers.WriteRuleWidget("LIBRETAS");
 
             var options = notebooks.Select(n => new OptionMenu<ListOptions, Notebook>(n.Name, ListOptions.Item, n)).ToList();
-            options.Add(new OptionMenu<ListOptions, Notebook>("Regresar", ListOptions.Back));
+            options.Add(new OptionMenu<ListOptions, Notebook>("\\Regresar", ListOptions.Back));
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<ListOptions, Notebook>>()
                     .UseConverter(t => t.Text)
