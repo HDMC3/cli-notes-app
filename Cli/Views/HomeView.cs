@@ -20,7 +20,6 @@ namespace Cli.Views
                         new OptionMenu<MainMenuOptions, Object>("Ver todas las libretas", MainMenuOptions.ShowNotebooks),
                         new OptionMenu<MainMenuOptions, Object>("Crear nueva libreta", MainMenuOptions.CreateNotebook),
                         new OptionMenu<MainMenuOptions, Object>("Editar libreta", MainMenuOptions.EditNotebook),
-                        new OptionMenu<MainMenuOptions, Object>("Crear nota", MainMenuOptions.CreateNote),
                         new OptionMenu<MainMenuOptions, Object>("Buscar nota", MainMenuOptions.SearchNote),
                         new OptionMenu<MainMenuOptions, Object>("Salir", MainMenuOptions.Exit),
                     })
@@ -39,9 +38,6 @@ namespace Cli.Views
                     return new ViewData(ViewCodes.CreateNotebookViewCode);
                 case MainMenuOptions.EditNotebook:
                     return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(true));
-                case MainMenuOptions.CreateNote:
-                    AnsiConsole.Write("Creacion de nota");
-                    return new ViewData(ViewCodes.ExitApp);
                 case MainMenuOptions.SearchNote:
                     return new ViewData(ViewCodes.SearchNoteViewCode);
                 case MainMenuOptions.Exit:

@@ -31,6 +31,7 @@ namespace Cli.Views {
             Helpers.WriteRuleWidget("NOTAS | " + data.Notebook.Name);
 
             var options = notes.Select(n => new OptionMenu<ListOptions, Note>(n.Title, ListOptions.Item, n)).ToList();
+            options.Add(new OptionMenu<ListOptions, Note>("Nueva nota", ListOptions.Create));
             options.Add(new OptionMenu<ListOptions, Note>("Regresar a lista de libretas", ListOptions.Back));
             options.Add(new OptionMenu<ListOptions, Note>("Menu principal", ListOptions.BackMainMenu));
             var option = AnsiConsole.Prompt(
@@ -47,8 +48,14 @@ namespace Cli.Views {
             }
             else
             {
-                if (option.Code == ListOptions.Back)
-                    return new ViewData(ViewCodes.NotebookListViewCode);
+                if (option.Code == ListOptions.Create){
+                    var createNoteViewData = new CreateNoteViewDataType(data.Notebook);
+                    return new ViewData(ViewCodes.CreateNoteViewCode, createNoteViewData);
+                }
+                else if (option.Code == ListOptions.Back) {
+                    var notebookListViewData = new NotebookListViewDataType(false);
+                    return new ViewData(ViewCodes.NotebookListViewCode, notebookListViewData);
+                }
                 else if (option.Code == ListOptions.BackMainMenu)
                     return new ViewData(ViewCodes.HomeViewCode);
                 else 

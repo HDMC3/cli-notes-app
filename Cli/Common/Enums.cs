@@ -3,13 +3,13 @@ namespace Cli.Common {
         ShowNotebooks,
         CreateNotebook,
         EditNotebook,
-        CreateNote,
         SearchNote,
         Exit
     }
 
     public enum ListOptions {
         Item,
+        Create,
         BackMainMenu,
         Back
     }
@@ -32,6 +32,7 @@ namespace Cli.Common {
         NoteSearchedDetailViewCode,
         NoteOptionsViewCode,
         NotebookNotesViewCode,
+        CreateNoteViewCode,
         NoteDetailViewCode,
         InvalidView,
         ExitApp,
