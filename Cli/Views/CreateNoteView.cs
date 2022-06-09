@@ -18,6 +18,9 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("NUEVA NOTA");
 
+            AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
+            AnsiConsole.Write(new Markup(data.Notebook.Name + " ---\n\n", new Style(foreground: Color.Grey)));
+
             var title = AnsiConsole.Prompt(
                 new TextPrompt<string>("Titulo:")
                     .AllowEmpty()
