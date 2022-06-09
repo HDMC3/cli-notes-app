@@ -43,7 +43,7 @@ namespace Cli.Views
                     AnsiConsole.Write("Creacion de nota");
                     return new ViewData(ViewCodes.ExitApp);
                 case MainMenuOptions.SearchNote:
-                    return new ViewData(ViewCodes.SearchNote);
+                    return new ViewData(ViewCodes.SearchNoteViewCode);
                 case MainMenuOptions.Exit:
                     AnsiConsole.Clear();
                     return new ViewData(ViewCodes.ExitApp);

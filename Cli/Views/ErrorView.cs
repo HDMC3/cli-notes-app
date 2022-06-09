@@ -5,7 +5,7 @@ using Spectre.Console;
 namespace Cli.Views {
     public class ErrorView {
         public ViewData ShowView() {
-            var panel = new Panel(new Markup("[red]Ha ocurrido un problema. Intenta nuevamente."));
+            var panel = new Panel(new Markup("[red]Ha ocurrido un problema. Intenta nuevamente.[/]"));
             panel.Border(BoxBorder.Double);
             panel.BorderStyle(new Style(foreground: Color.Red));
             AnsiConsole.Write(panel);

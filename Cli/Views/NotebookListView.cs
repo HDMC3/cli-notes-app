@@ -44,7 +44,7 @@ namespace Cli.Views {
                 var editNotebookViewData = new EditNotebookViewDataType(option.Value);
                 return !data.Edit
                     ? new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData) 
-                    : new ViewData(ViewCodes.EditNotebook, editNotebookViewData);
+                    : new ViewData(ViewCodes.EditNotebookViewCode, editNotebookViewData);
             }
             else
             {

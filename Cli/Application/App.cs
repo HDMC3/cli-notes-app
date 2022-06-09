@@ -32,7 +32,8 @@ namespace Cli.Application
             var noteOptionsView = new NoteOptionsView();
             var errorView = new ErrorView();
             var editNotebookView = new EditNotebookView(_serviceProvider);
-            var searchNoteView = new SearchNoteView(_serviceProvider);
+            var searchNoteView = new SearchNoteView();
+            var noteSearchResultView = new NoteSearchResultView(_serviceProvider);
 
             ViewData viewSelected = homeView.ShowView();
             
@@ -58,9 +59,14 @@ namespace Cli.Application
                         viewSelected = noteOptionsView.ShowView(data!);
                     }
 
-                    if (viewSelected.Code == ViewCodes.EditNotebook) {
+                    if (viewSelected.Code == ViewCodes.EditNotebookViewCode) {
                         var data = viewSelected.Data as EditNotebookViewDataType;
                         viewSelected = await editNotebookView.ShowView(data!);
+                    }
+
+                    if (viewSelected.Code == ViewCodes.NoteSearchResultViewCode) {
+                        var data = viewSelected.Data as NoteSearchResultViewDataType;
+                        viewSelected = await noteSearchResultView.ShowView(data!);
                     }
                 } else {
                     if (viewSelected.Code == ViewCodes.HomeViewCode) {
@@ -75,8 +81,8 @@ namespace Cli.Application
                         viewSelected = errorView.ShowView();
                     }
 
-                    if (viewSelected.Code == ViewCodes.SearchNote) {
-                        viewSelected = await searchNoteView.ShowView();
+                    if (viewSelected.Code == ViewCodes.SearchNoteViewCode) {
+                        viewSelected = searchNoteView.ShowView();
                     }
                 }
             }

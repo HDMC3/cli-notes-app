@@ -1,18 +1,12 @@
 using Cli.Application;
 using Cli.Common;
-using Microsoft.Extensions.DependencyInjection;
-using Services;
-using Services.Models;
+using Cli.ViewDataTypes;
 using Spectre.Console;
 
 namespace Cli.Views {
     public class SearchNoteView {
-        IServiceProvider _serviceProvider;
-        public SearchNoteView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
-        }
 
-        public async Task<ViewData> ShowView() {
+        public ViewData ShowView() {
             AnsiConsole.Clear();
 
             Helpers.WriteRuleWidget("BUSCAR NOTA");
@@ -29,31 +23,8 @@ namespace Cli.Views {
             );
 
             if (option.Item2 == 1) {
-                var searchNote = _serviceProvider.GetService<SearchNote>();
-                var notes = new List<Note>();
-                if (searchNote != null) {
-                    try
-                    {
-                        await AnsiConsole.Status()
-                            .Spinner(Spinner.Known.SquareCorners)
-                            .SpinnerStyle(new Style(foreground: Colors.primary))
-                            .StartAsync("Buscando...", async (ctx) =>
-                            {
-                                notes = await searchNote.Search(query);
-                            });
-                        foreach(var note in notes) {
-                            AnsiConsole.WriteLine(note.Title);
-                        }
-                        Console.Read();
-                        return new ViewData(ViewCodes.HomeViewCode);
-                    }
-                    catch (System.Exception)
-                    {
-                        return new ViewData(ViewCodes.ErrorView);
-                    }
-                }
-
-                return new ViewData(ViewCodes.ExitApp);
+                var noteSearchResultViewData = new NoteSearchResultViewDataType(query);
+                return new ViewData(ViewCodes.NoteSearchResultViewCode, noteSearchResultViewData);
             } else {
                 return new ViewData(ViewCodes.HomeViewCode);
             }
