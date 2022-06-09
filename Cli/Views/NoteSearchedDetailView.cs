@@ -35,10 +35,9 @@ namespace Cli.Views {
             AnsiConsole.Clear();
             Helpers.WriteRuleWidget("DETALLE DE NOTA");
             
-            if (notebook != null) {
-                AnsiConsole.Write(new Markup("Libreta:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
-                AnsiConsole.WriteLine(notebook.Name + "\n");
-            }
+            if (notebook != null)
+                Helpers.WriteNotebookIndicator(notebook.Name);
+
             AnsiConsole.Write(new Markup("Titulo:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
             AnsiConsole.WriteLine(data.Note.Title + "\n");
             AnsiConsole.Write(new Markup("Descripcion:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
