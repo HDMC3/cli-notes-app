@@ -19,5 +19,10 @@ namespace Cli.Common {
                 .SpinnerStyle(new Style(foreground: Colors.primary))
                 .StartAsync(loadingText, callback);
         } 
+
+        public static void WriteNotebookIndicator(string notebookName) {
+            AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
+            AnsiConsole.Write(new Markup(notebookName + " ---\n\n", new Style(foreground: Color.Grey, decoration: Decoration.Bold)));
+        }
     }
 }

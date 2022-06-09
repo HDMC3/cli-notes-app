@@ -18,8 +18,8 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("EDITAR NOTA");
 
-            AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
-            AnsiConsole.Write(new Markup(data.Notebook.Name + " ---\n\n", new Style(foreground: Color.Grey, decoration: Decoration.Bold)));
+            Helpers.WriteNotebookIndicator(data.Notebook.Name);
+            
             AnsiConsole.Write(new Markup("Titulo: ", new Style(foreground: Colors.primary)));
             AnsiConsole.Write(data.Note.Title + "\n");
             AnsiConsole.Write(new Markup("Descripcion: ", new Style(foreground: Colors.primary)));

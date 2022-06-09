@@ -7,9 +7,11 @@ namespace Cli.Views {
     public class NoteDetailView {
         public ViewData ShowView(NoteDetailViewDataType data) {
             AnsiConsole.Clear();
+            
             Helpers.WriteRuleWidget("DETALLE DE NOTA");
-            AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
-            AnsiConsole.Write(new Markup(data.Notebook.Name + " ---\n\n", new Style(foreground: Color.Grey, decoration: Decoration.Bold)));
+
+            Helpers.WriteNotebookIndicator(data.Notebook.Name);
+            
             AnsiConsole.Write(new Markup("Titulo:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
             AnsiConsole.WriteLine(data.Note.Title + "\n");
             AnsiConsole.Write(new Markup("Descripcion:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
