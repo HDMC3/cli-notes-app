@@ -18,8 +18,20 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("NUEVA NOTA");
 
-            var title = AnsiConsole.Ask<string>("Titulo:");
-            var description = AnsiConsole.Ask<string>("Descripcion:");
+            var title = AnsiConsole.Prompt(
+                new TextPrompt<string>("Titulo:")
+                    .AllowEmpty()
+            );
+
+            var description = AnsiConsole.Prompt(
+                new TextPrompt<string>("Descripcion:")
+                    .AllowEmpty()
+            );
+
+            if (String.IsNullOrWhiteSpace(title) || String.IsNullOrWhiteSpace(description)) {
+                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
+                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
+            }
 
             AnsiConsole.WriteLine();
 
@@ -32,37 +44,38 @@ namespace Cli.Views {
                     )
             );
 
-            if (option.Item2 == 1) {
-                var createNote = _serviceProvider.GetService<CreateNote>();
-                if (createNote != null) {
-                    try
-                    {
-                        await AnsiConsole.Status()
-                            .Spinner(Spinner.Known.SquareCorners)
-                            .SpinnerStyle(new Style(foreground: Colors.primary))
-                            .StartAsync("Guardando...", async (ctx) =>
-                            {
-                                await createNote.Create(
-                                    new Note { 
-                                        Title = title, 
-                                        Description = description,
-                                        NotebookId = data.Notebook.Id
-                                    }
-                                );
-                            });
-                        var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
-                        return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
-                    }
-                    catch (System.Exception)
-                    {
-                        return new ViewData(ViewCodes.ErrorView);
-                    }
-                }
-
-                return new ViewData(ViewCodes.ErrorView);
-            } else {
-                return new ViewData(ViewCodes.HomeViewCode);
+            if (option.Item2 == 2) {
+                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
+                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
             }
+
+            var createNote = _serviceProvider.GetService<CreateNote>();
+            if (createNote != null) {
+                try
+                {
+                    await AnsiConsole.Status()
+                        .Spinner(Spinner.Known.SquareCorners)
+                        .SpinnerStyle(new Style(foreground: Colors.primary))
+                        .StartAsync("Guardando...", async (ctx) =>
+                        {
+                            await createNote.Create(
+                                new Note { 
+                                    Title = title, 
+                                    Description = description,
+                                    NotebookId = data.Notebook.Id
+                                }
+                            );
+                        });
+                    var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
+                    return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
+                }
+                catch (System.Exception)
+                {
+                    return new ViewData(ViewCodes.ErrorView);
+                }
+            }
+
+            return new ViewData(ViewCodes.ErrorView);
         }
     }
 }
