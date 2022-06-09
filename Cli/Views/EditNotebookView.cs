@@ -28,6 +28,8 @@ namespace Cli.Views {
             if (String.IsNullOrWhiteSpace(name))
                 return new ViewData(ViewCodes.HomeViewCode);
             
+            AnsiConsole.WriteLine();
+
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<(string, int)>()
                     .UseConverter(opt => opt.Item1)

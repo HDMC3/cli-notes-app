@@ -13,6 +13,8 @@ namespace Cli.Views {
 
             var query = AnsiConsole.Ask<string>("Termino de busqueda:");
 
+            AnsiConsole.WriteLine();
+
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<(string, int)>()
                     .UseConverter(opt => opt.Item1)
