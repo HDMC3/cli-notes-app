@@ -18,10 +18,16 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("EDITAR LIBRETA");
 
-            AnsiConsole.Write(new Markup("Nombre:\n", new Style(foreground: Colors.primary)));
+            AnsiConsole.Write(new Markup("Nombre: ", new Style(foreground: Colors.primary)));
             AnsiConsole.Write(data.Notebook.Name + "\n");
             AnsiConsole.WriteLine();
-            var name = AnsiConsole.Ask<string>("Nuevo nombre:");
+            var name = AnsiConsole.Prompt(
+                new TextPrompt<string>("Nuevo nombre:")
+                    .AllowEmpty()
+            );
+            if (String.IsNullOrWhiteSpace(name))
+                return new ViewData(ViewCodes.HomeViewCode);
+            
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<(string, int)>()
                     .UseConverter(opt => opt.Item1)
