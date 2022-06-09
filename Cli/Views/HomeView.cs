@@ -1,5 +1,6 @@
 using Cli.Application;
 using Cli.Common;
+using Cli.ViewDataTypes;
 using Spectre.Console;
 
 namespace Cli.Views
@@ -33,12 +34,11 @@ namespace Cli.Views
             switch (option.Code)
             {
                 case MainMenuOptions.ShowNotebooks:
-                    return new ViewData(ViewCodes.NotebookListViewCode);
+                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(false));
                 case MainMenuOptions.CreateNotebook:
                     return new ViewData(ViewCodes.CreateNotebookViewCode);
                 case MainMenuOptions.EditNotebook:
-                    AnsiConsole.Write("Edicion de libreta");
-                    return new ViewData(ViewCodes.ExitApp);
+                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(true));
                 case MainMenuOptions.CreateNote:
                     AnsiConsole.Write("Creacion de nota");
                     return new ViewData(ViewCodes.ExitApp);

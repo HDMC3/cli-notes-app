@@ -26,6 +26,7 @@ namespace Cli.Common {
         HomeViewCode,
         NotebookListViewCode,
         CreateNotebookViewCode,
+        EditNotebook,
         NoteOptionsViewCode,
         NotebookNotesViewCode,
         NoteDetailViewCode,
