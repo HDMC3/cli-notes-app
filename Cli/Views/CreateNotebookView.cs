@@ -15,7 +15,15 @@ namespace Cli.Views {
         public async Task<ViewData> ShowView() {
             AnsiConsole.Clear();
             Helpers.WriteRuleWidget("NUEVA LIBRETA");
-            var name = AnsiConsole.Ask<string>("Nombre de la libreta:");
+            var name = AnsiConsole.Prompt(
+                new TextPrompt<string>("Nombre de la libreta:")
+                    .AllowEmpty()
+            );
+            
+            if (String.IsNullOrWhiteSpace(name)) 
+                return new ViewData(ViewCodes.HomeViewCode);
+
+            AnsiConsole.WriteLine();
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<(string, int)>()
                     .UseConverter(opt => opt.Item1)
