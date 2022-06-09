@@ -15,7 +15,7 @@ namespace Cli.Views {
             AnsiConsole.Write(new Markup("Descripcion:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
             AnsiConsole.WriteLine(data.Note.Description + "\n");
             AnsiConsole.Write(new Markup("Fecha de creacion:\n", new Style(foreground: Colors.primary, decoration: Decoration.Bold)));
-            AnsiConsole.WriteLine(data.Note.CreatedAt.ToString() + "\n");
+            AnsiConsole.WriteLine(data.Note.CreatedAt.ToString());
             
             AnsiConsole.WriteLine();
 
