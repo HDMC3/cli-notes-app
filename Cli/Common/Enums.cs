@@ -29,6 +29,7 @@ namespace Cli.Common {
         EditNotebookViewCode,
         SearchNoteViewCode,
         NoteSearchResultViewCode,
+        NoteSearchedDetailViewCode,
         NoteOptionsViewCode,
         NotebookNotesViewCode,
         NoteDetailViewCode,

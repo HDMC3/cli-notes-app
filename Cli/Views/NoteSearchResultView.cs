@@ -54,7 +54,8 @@ namespace Cli.Views {
 
             if (option.Value != null)
             {
-                return new ViewData(ViewCodes.ErrorView);
+                var noteSearchedDetailViewData = new NoteSearchedDetailViewDataType(option.Value, data.Query);
+                return new ViewData(ViewCodes.NoteSearchedDetailViewCode, noteSearchedDetailViewData);
             }
             else
             {
