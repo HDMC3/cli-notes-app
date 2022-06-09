@@ -18,7 +18,7 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("EDITAR NOTA");
 
-            AnsiConsole.Write(new Markup("--- Pertenece a libreta: ", new Style(foreground: Color.Grey)));
+            AnsiConsole.Write(new Markup("--- Libreta: ", new Style(foreground: Color.Grey)));
             // AnsiConsole.Write(new Markup("Libreta: ", new Style(foreground: Colors.primary)));
             AnsiConsole.Write(new Markup(data.Notebook.Name + " ---\n\n", new Style(foreground: Color.Grey, decoration: Decoration.Bold)));
             AnsiConsole.Write(new Markup("Titulo: ", new Style(foreground: Colors.primary)));
