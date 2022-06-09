@@ -47,10 +47,7 @@ namespace Cli.Views {
 
             try
             {
-                await AnsiConsole.Status()
-                    .Spinner(Spinner.Known.SquareCorners)
-                    .SpinnerStyle(new Style(foreground: Colors.primary))
-                    .StartAsync("Elimando...", async (ctx) =>
+                await Helpers.StartSpinnerAsync("Elimando...", async (ctx) =>
                     {
                         await deleteNote.Delete(data.Note);
                     });

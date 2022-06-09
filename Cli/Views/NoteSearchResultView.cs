@@ -21,10 +21,7 @@ namespace Cli.Views {
             if (searchNote != null) {
                 try
                 {
-                    await AnsiConsole.Status()
-                        .Spinner(Spinner.Known.SquareCorners)
-                        .SpinnerStyle(new Style(foreground: Colors.primary))
-                        .StartAsync("Buscando...", async (ctx) =>
+                    await Helpers.StartSpinnerAsync("Buscando...", async (ctx) =>
                         {
                             notes = await searchNote.Search(data.Query);
                         });

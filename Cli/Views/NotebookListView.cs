@@ -17,15 +17,18 @@ namespace Cli.Views {
             var getNotebooks = _serviceProvider.GetService<GetNotebooks>();
             AnsiConsole.Clear();
             var notebooks = new List<Notebook>();
-            if (getNotebooks != null)
+            if (getNotebooks == null)
+                return new ViewData(ViewCodes.ErrorView);
+
+            try
             {
-                await AnsiConsole.Status()
-                    .Spinner(Spinner.Known.SquareCorners)
-                    .SpinnerStyle(Style.Parse("green"))
-                    .StartAsync("Cargando libretas...", async (ctx) =>
-                    {
+                await Helpers.StartSpinnerAsync("Cargando libretas...", async (ctx) => {
                         notebooks = await getNotebooks.Get();
                     });
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
             }
 
             Helpers.WriteRuleWidget("LIBRETAS");

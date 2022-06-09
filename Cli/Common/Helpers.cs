@@ -12,5 +12,12 @@ namespace Cli.Common {
             AnsiConsole.Write(rule);
             AnsiConsole.WriteLine();
         }
+
+        public static Task StartSpinnerAsync(string loadingText, Func<StatusContext, Task> callback) {
+            return AnsiConsole.Status()
+                .Spinner(Spinner.Known.SquareCorners)
+                .SpinnerStyle(new Style(foreground: Colors.primary))
+                .StartAsync(loadingText, callback);
+        } 
     }
 }

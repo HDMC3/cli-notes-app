@@ -49,10 +49,7 @@ namespace Cli.Views {
 
             try
             {
-                await AnsiConsole.Status()
-                    .Spinner(Spinner.Known.SquareCorners)
-                    .SpinnerStyle(new Style(foreground: Colors.primary))
-                    .StartAsync("Guardando...", async (ctx) =>
+                await Helpers.StartSpinnerAsync("Guardando...", async (ctx) =>
                     {
                         data.Notebook.Name = name;
                         await editNotebook.Edit(data.Notebook);

@@ -59,10 +59,7 @@ namespace Cli.Views {
 
             try
             {
-                await AnsiConsole.Status()
-                    .Spinner(Spinner.Known.SquareCorners)
-                    .SpinnerStyle(new Style(foreground: Colors.primary))
-                    .StartAsync("Guardando...", async (ctx) =>
+                await  Helpers.StartSpinnerAsync("Guardando...", async (ctx) =>
                     {
                         await createNote.Create(
                             new Note { 

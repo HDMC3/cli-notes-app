@@ -19,10 +19,7 @@ namespace Cli.Views {
             var notes = new List<Note>();
             if (getNotes != null)
             {
-                await AnsiConsole.Status()
-                    .Spinner(Spinner.Known.SquareCorners)
-                    .SpinnerStyle(Style.Parse("green"))
-                    .StartAsync("Cargando notas...", async (ctx) =>
+                await Helpers.StartSpinnerAsync("Cargando notas...", async (ctx) =>
                     {
                         notes = await getNotes.Get(data.Notebook.Id);
                     });

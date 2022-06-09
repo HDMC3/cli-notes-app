@@ -21,10 +21,7 @@ namespace Cli.Views {
             if (getNotebook != null) {
                 try
                 {
-                    await AnsiConsole.Status()
-                        .Spinner(Spinner.Known.SquareCorners)
-                        .SpinnerStyle(new Style(foreground: Colors.primary))
-                        .StartAsync("Cargando...", async (ctx) =>
+                    await Helpers.StartSpinnerAsync("Cargando...", async (ctx) =>
                         {
                             notebook = await getNotebook.Get(data.Note.NotebookId);
                         });
