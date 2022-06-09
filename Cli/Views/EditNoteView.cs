@@ -42,6 +42,8 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
             }
                 
+            AnsiConsole.WriteLine();
+
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<(string, int)>()
                     .UseConverter(opt => opt.Item1)
@@ -77,7 +79,8 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.ErrorView);
 
             } else {
-                return new ViewData(ViewCodes.HomeViewCode);
+                var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
+                return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
             }
             
         }
