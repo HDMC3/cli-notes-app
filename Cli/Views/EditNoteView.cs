@@ -3,7 +3,6 @@ using Cli.Common;
 using Cli.ViewDataTypes;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
-using Services.Models;
 using Spectre.Console;
 
 namespace Cli.Views {

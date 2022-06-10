@@ -1,4 +1,3 @@
-using Postgrest;
 using Spectre.Console;
 
 namespace Cli.Common {
