@@ -35,6 +35,9 @@ namespace Cli.Views {
 
             Helpers.WriteRuleWidget("LIBRETAS");
 
+            if (notebooks.Count == 0)
+                AnsiConsole.Markup("[grey]--- NO SE ENCONTRARON LIBRETAS ---\n\n[/]");
+
             var options = notebooks.Select(n => new OptionMenu<ListOptions, Notebook>(n.Name, ListOptions.Item, n)).ToList();
             options.Add(new OptionMenu<ListOptions, Notebook>("\\Regresar", ListOptions.Back));
             var option = AnsiConsole.Prompt(

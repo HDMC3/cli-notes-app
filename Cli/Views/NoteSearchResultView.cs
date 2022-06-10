@@ -41,6 +41,9 @@ namespace Cli.Views {
             AnsiConsole.Write(data.Query + "\n");
             AnsiConsole.WriteLine();
 
+            if (notes.Count == 0)
+                AnsiConsole.Markup("[grey]--- NO SE ENCONTRARON RESULTADOS ---\n\n[/]");
+
             var options = notes.Select(n => new OptionMenu<ListOptions, Note>(n.Title, ListOptions.Item, n)).ToList();
             options.Add(new OptionMenu<ListOptions, Note>("\\Regresar a buscar nota", ListOptions.Back));
             options.Add(new OptionMenu<ListOptions, Note>("\\Menu principal", ListOptions.BackMainMenu));
