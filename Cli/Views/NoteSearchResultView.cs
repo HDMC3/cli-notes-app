@@ -17,19 +17,21 @@ namespace Cli.Views {
             AnsiConsole.Clear();
 
             var searchNote = _serviceProvider.GetService<SearchNote>();
+
+            if (searchNote == null) 
+                return new ViewData(ViewCodes.ErrorView);
+            
             var notes = new List<Note>();
-            if (searchNote != null) {
-                try
-                {
-                    await Helpers.StartSpinnerAsync("Buscando...", async (ctx) =>
-                        {
-                            notes = await searchNote.Search(data.Query);
-                        });
-                }
-                catch (System.Exception)
-                {
-                    return new ViewData(ViewCodes.ErrorView);
-                }
+            try
+            {
+                await Helpers.StartSpinnerAsync("Buscando...", async (ctx) =>
+                    {
+                        notes = await searchNote.Search(data.Query);
+                    });
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
             }
 
             AnsiConsole.Clear();

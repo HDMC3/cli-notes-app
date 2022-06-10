@@ -16,13 +16,21 @@ namespace Cli.Views {
         public async Task<ViewData> ShowView(NotebookNotesViewDataType data) {
             var getNotes = _serviceProvider.GetService<GetNotes>();
             AnsiConsole.Clear();
+
+            if (getNotes == null) 
+                return new ViewData(ViewCodes.ErrorView);
+
             var notes = new List<Note>();
-            if (getNotes != null)
+            try
             {
                 await Helpers.StartSpinnerAsync("Cargando notas...", async (ctx) =>
                     {
                         notes = await getNotes.Get(data.Notebook.Id);
                     });
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
             }
 
             Helpers.WriteRuleWidget("NOTAS | " + data.Notebook.Name);

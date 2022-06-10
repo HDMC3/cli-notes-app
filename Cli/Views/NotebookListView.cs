@@ -15,11 +15,13 @@ namespace Cli.Views {
 
         public async Task<ViewData> ShowView(NotebookListViewDataType data) {
             var getNotebooks = _serviceProvider.GetService<GetNotebooks>();
+            
             AnsiConsole.Clear();
-            var notebooks = new List<Notebook>();
+
             if (getNotebooks == null)
                 return new ViewData(ViewCodes.ErrorView);
 
+            var notebooks = new List<Notebook>();
             try
             {
                 await Helpers.StartSpinnerAsync("Cargando libretas...", async (ctx) => {

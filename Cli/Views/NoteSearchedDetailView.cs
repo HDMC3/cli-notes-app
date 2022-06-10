@@ -17,19 +17,21 @@ namespace Cli.Views {
             AnsiConsole.Clear();
 
             var getNotebook = _serviceProvider.GetService<GetNotebook>();
+
+            if (getNotebook == null) 
+                return new ViewData(ViewCodes.ErrorView);
+            
             Notebook? notebook = null;
-            if (getNotebook != null) {
-                try
-                {
-                    await Helpers.StartSpinnerAsync("Cargando...", async (ctx) =>
-                        {
-                            notebook = await getNotebook.Get(data.Note.NotebookId);
-                        });
-                }
-                catch (System.Exception)
-                {
-                    return new ViewData(ViewCodes.ErrorView);
-                }
+            try
+            {
+                await Helpers.StartSpinnerAsync("Cargando...", async (ctx) =>
+                    {
+                        notebook = await getNotebook.Get(data.Note.NotebookId);
+                    });
+            }
+            catch (System.Exception)
+            {
+                return new ViewData(ViewCodes.ErrorView);
             }
 
             AnsiConsole.Clear();

@@ -53,6 +53,7 @@ namespace Cli.Views {
             }
 
             var editNote = _serviceProvider.GetService<EditNote>();
+            
             if (editNote == null)
                 return new ViewData(ViewCodes.ErrorView);
 

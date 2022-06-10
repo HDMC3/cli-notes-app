@@ -34,6 +34,7 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.HomeViewCode);
 
             var createNotebook = _serviceProvider.GetService<CreateNotebook>();
+            
             if (createNotebook == null)
                 return new ViewData(ViewCodes.ErrorView);
 
