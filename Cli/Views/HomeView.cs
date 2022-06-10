@@ -20,6 +20,7 @@ namespace Cli.Views
                         new OptionMenu<MainMenuOptions, Object>("Ver todas las libretas", MainMenuOptions.ShowNotebooks),
                         new OptionMenu<MainMenuOptions, Object>("Crear nueva libreta", MainMenuOptions.CreateNotebook),
                         new OptionMenu<MainMenuOptions, Object>("Editar libreta", MainMenuOptions.EditNotebook),
+                        new OptionMenu<MainMenuOptions, Object>("Eliminar libreta", MainMenuOptions.DeleteNotebook),
                         new OptionMenu<MainMenuOptions, Object>("Buscar nota", MainMenuOptions.SearchNote),
                         new OptionMenu<MainMenuOptions, Object>("Salir", MainMenuOptions.Exit),
                     })
@@ -33,11 +34,13 @@ namespace Cli.Views
             switch (option.Code)
             {
                 case MainMenuOptions.ShowNotebooks:
-                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(false));
+                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType());
                 case MainMenuOptions.CreateNotebook:
                     return new ViewData(ViewCodes.CreateNotebookViewCode);
                 case MainMenuOptions.EditNotebook:
-                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(true));
+                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(edit: true));
+                case MainMenuOptions.DeleteNotebook:
+                    return new ViewData(ViewCodes.NotebookListViewCode, new NotebookListViewDataType(delete: true));
                 case MainMenuOptions.SearchNote:
                     return new ViewData(ViewCodes.SearchNoteViewCode);
                 case MainMenuOptions.Exit:

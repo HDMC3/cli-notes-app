@@ -3,6 +3,7 @@ namespace Cli.Common {
         ShowNotebooks,
         CreateNotebook,
         EditNotebook,
+        DeleteNotebook,
         SearchNote,
         Exit
     }
@@ -27,6 +28,7 @@ namespace Cli.Common {
         NotebookListViewCode,
         CreateNotebookViewCode,
         EditNotebookViewCode,
+        DeleteNotebookViewCode,
         SearchNoteViewCode,
         NoteSearchResultViewCode,
         NoteSearchedDetailViewCode,
