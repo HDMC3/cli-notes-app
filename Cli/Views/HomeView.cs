@@ -15,6 +15,7 @@ namespace Cli.Views
 
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<MainMenuOptions, Object>>()
+                    .HighlightStyle(new Style(foreground: Colors.primary, decoration: Decoration.Underline))
                     .UseConverter(t => t.Text)
                     .AddChoices(new OptionMenu<MainMenuOptions, Object>[]{
                         new OptionMenu<MainMenuOptions, Object>("Ver todas las libretas", MainMenuOptions.ShowNotebooks),

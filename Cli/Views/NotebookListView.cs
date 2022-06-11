@@ -42,6 +42,7 @@ namespace Cli.Views {
             options.Add(new OptionMenu<ListOptions, Notebook>("\\Regresar", ListOptions.Back));
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<ListOptions, Notebook>>()
+                    .HighlightStyle(new Style(foreground: Colors.primary, decoration: Decoration.Underline))
                     .UseConverter(t => t.Text)
                     .AddChoices(options)
             );

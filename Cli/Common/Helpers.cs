@@ -28,6 +28,7 @@ namespace Cli.Common {
         public static (string, int) ConfirmationMenuPrompt(params (string, int)[] choices) {
             return AnsiConsole.Prompt(
                 new SelectionPrompt<(string, int)>()
+                    .HighlightStyle(new Style(foreground: Colors.primary, decoration: Decoration.Underline))
                     .UseConverter(opt => opt.Item1)
                     .AddChoices(choices)
             );

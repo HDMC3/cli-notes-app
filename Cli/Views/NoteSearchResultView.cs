@@ -49,6 +49,7 @@ namespace Cli.Views {
             options.Add(new OptionMenu<ListOptions, Note>("\\Menu principal", ListOptions.BackMainMenu));
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<ListOptions, Note>>()
+                    .HighlightStyle(new Style(foreground: Colors.primary, decoration: Decoration.Underline))
                     .PageSize(10)
                     .UseConverter(t => t.Text)
                     .AddChoices(options)

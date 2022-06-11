@@ -13,6 +13,7 @@ namespace Cli.Views {
 
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<OptionMenu<NoteOptions, Object>>()
+                    .HighlightStyle(new Style(foreground: Colors.primary, decoration: Decoration.Underline))
                     .UseConverter(t => t.Text)
                     .AddChoices(
                         new OptionMenu<NoteOptions, Object>("Ver nota", NoteOptions.ShowNote),
