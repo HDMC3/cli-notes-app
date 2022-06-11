@@ -60,6 +60,7 @@ namespace Cli.Views {
                             new Note { 
                                 Title = title, 
                                 Description = description,
+                                CreatedAt = DateTimeOffset.Now,
                                 NotebookId = data.Notebook.Id
                             }
                         );

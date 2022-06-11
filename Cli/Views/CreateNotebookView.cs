@@ -42,7 +42,7 @@ namespace Cli.Views {
             {
                 await Helpers.StartSpinnerAsync("Guardando...", async ctx => 
                 {
-                    await createNotebook.Create(new Notebook { Name = name });
+                    await createNotebook.Create(new Notebook { Name = name, CreatedAt = DateTimeOffset.Now });
                 });
                 return new ViewData(ViewCodes.HomeViewCode);
             }
