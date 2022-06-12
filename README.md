@@ -1,6 +1,6 @@
 # Cli Notes App
 
-Aplicación de consola para gestionar notas sencillas, agrupadas en libretas, que permite hacer las operaciones CRUD típicas. Está desarrollada con .Net 6, las notas y libretas son almacenadas en una base de datos de Supabase, y se usa la librería Spectre.Console para los elementos visuales de la aplicación.
+Aplicación de consola para gestionar notas sencillas, agrupadas en libretas, que permite hacer las operaciones CRUD típicas. Está desarrollada con .Net 6, las notas y libretas son almacenadas en una base de datos de Supabase, utiliza la librería supabase-csharp para la conexión con los servicios de Supabase, y se usa la librería Spectre.Console para los elementos visuales de la aplicación.
 
 
 ![Capturas Cli Notes App](readme-image.jpg)
@@ -10,6 +10,7 @@ Aplicación de consola para gestionar notas sencillas, agrupadas en libretas, qu
 
 - [.NET 6 (SDK v6.0.300)](https://docs.microsoft.com/es-mx/dotnet/fundamentals/)
 - [Spectre.Console](https://spectreconsole.net/)
+- [supabase-csharp](https://github.com/supabase-community/supabase-csharp)
 
 ### Servicios
 
