@@ -1,31 +1,30 @@
 using Cli.Application;
 using Cli.Common;
 using Cli.ViewDataTypes;
-using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Models;
 using Spectre.Console;
 
 namespace Cli.Views {
     public class NotebookListView {
-        IServiceProvider _serviceProvider;
-        public NotebookListView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
+        // IServiceProvider _serviceProvider;
+        // public NotebookListView(IServiceProvider serviceProvider) {
+        //     _serviceProvider = serviceProvider;
+        // }
+        GetNotebooks _getNotebooks;
+        public NotebookListView(GetNotebooks getNotebooks) {
+            _getNotebooks = getNotebooks;
         }
 
         public async Task<ViewData> ShowView(NotebookListViewDataType data) {
-            var getNotebooks = _serviceProvider.GetService<GetNotebooks>();
-            
-            AnsiConsole.Clear();
 
-            if (getNotebooks == null)
-                return new ViewData(ViewCodes.ErrorView);
+            AnsiConsole.Clear();
 
             var notebooks = new List<Notebook>();
             try
             {
                 await Helpers.StartSpinnerAsync("Cargando libretas...", async (ctx) => {
-                        notebooks = await getNotebooks.Get();
+                        notebooks = await _getNotebooks.Get();
                     });
             }
             catch (System.Exception)

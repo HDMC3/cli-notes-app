@@ -7,9 +7,9 @@ using Spectre.Console;
 
 namespace Cli.Views {
     public class DeleteNotebookView {
-        private IServiceProvider _serviceProvider;
-        public DeleteNotebookView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
+        private DeleteNotebook _deleteNotebook;
+        public DeleteNotebookView(DeleteNotebook deleteNotebook) {
+            _deleteNotebook = deleteNotebook;
         }
 
         public async Task<ViewData> ShowView(DeleteNotebookViewDataType data) {
@@ -27,18 +27,13 @@ namespace Cli.Views {
                 ("Cancelar", 2)
             );
 
-            var deleteNotebook = _serviceProvider.GetService<DeleteNotebook>();
-
-            if (deleteNotebook == null) 
-                return new ViewData(ViewCodes.ErrorView);
-
             if (option.Item2 == 2) 
                 return new ViewData(ViewCodes.HomeViewCode);
 
             try
             {
                 await Helpers.StartSpinnerAsync("Eliminando...", async ctx => {
-                    await deleteNotebook.Delete(data.Notebook.Id);
+                    await _deleteNotebook.Delete(data.Notebook.Id);
                 });
 
                 return new ViewData(ViewCodes.HomeViewCode);

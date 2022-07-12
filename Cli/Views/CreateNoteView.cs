@@ -1,16 +1,15 @@
 using Cli.Application;
 using Cli.Common;
 using Cli.ViewDataTypes;
-using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Models;
 using Spectre.Console;
 
 namespace Cli.Views {
     public class CreateNoteView {
-        IServiceProvider _serviceProvider;
-        public CreateNoteView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
+        CreateNote _createNote;
+        public CreateNoteView(CreateNote createNote) {
+            _createNote = createNote;
         }
 
         public async Task<ViewData> ShowView(CreateNoteViewDataType data) {
@@ -47,16 +46,11 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
             }
 
-            var createNote = _serviceProvider.GetService<CreateNote>();
-
-            if (createNote == null)
-                return new ViewData(ViewCodes.ErrorView);
-
             try
             {
                 await  Helpers.StartSpinnerAsync("Guardando...", async (ctx) =>
                     {
-                        await createNote.Create(
+                        await _createNote.Create(
                             new Note { 
                                 Title = title, 
                                 Description = description,

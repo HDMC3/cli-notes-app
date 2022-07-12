@@ -1,32 +1,26 @@
 using Cli.Application;
 using Cli.Common;
 using Cli.ViewDataTypes;
-using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Models;
 using Spectre.Console;
 
 namespace Cli.Views {
     public class NoteSearchedDetailView {
-        IServiceProvider _serviceProvider;
-        public NoteSearchedDetailView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
+        GetNotebook _getNotebook;
+        public NoteSearchedDetailView(GetNotebook getNotebook) {
+            _getNotebook = getNotebook;
         }
 
         public async Task<ViewData> ShowView(NoteSearchedDetailViewDataType data) {
             AnsiConsole.Clear();
-
-            var getNotebook = _serviceProvider.GetService<GetNotebook>();
-
-            if (getNotebook == null) 
-                return new ViewData(ViewCodes.ErrorView);
             
             Notebook? notebook = null;
             try
             {
                 await Helpers.StartSpinnerAsync("Cargando...", async (ctx) =>
                     {
-                        notebook = await getNotebook.Get(data.Note.NotebookId);
+                        notebook = await _getNotebook.Get(data.Note.NotebookId);
                     });
             }
             catch (System.Exception)

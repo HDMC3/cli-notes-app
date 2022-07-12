@@ -1,6 +1,7 @@
 using Cli.Common;
 using Cli.ViewDataTypes;
 using Cli.Views;
+using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
 
 namespace Cli.Application
@@ -25,20 +26,28 @@ namespace Cli.Application
             AnsiConsole.Clear();
 
             var homeView = new HomeView();
-            var notebookListView = new NotebookListView(_serviceProvider);
-            var createNotebookView = new CreateNotebookView(_serviceProvider);
-            var notebookNotesView = new NotebookNotesView(_serviceProvider);
+            var notebookListView = _serviceProvider.GetService<NotebookListView>();
+            var createNotebookView = _serviceProvider.GetService<CreateNotebookView>();
+            var notebookNotesView = _serviceProvider.GetService<NotebookNotesView>();
             var noteDetailView = new NoteDetailView();
             var noteOptionsView = new NoteOptionsView();
             var errorView = new ErrorView();
-            var editNotebookView = new EditNotebookView(_serviceProvider);
+            var editNotebookView = _serviceProvider.GetService<EditNotebookView>();
             var searchNoteView = new SearchNoteView();
-            var noteSearchResultView = new NoteSearchResultView(_serviceProvider);
-            var noteSearchedDetailView = new NoteSearchedDetailView(_serviceProvider);
-            var createNoteView = new CreateNoteView(_serviceProvider);
-            var editNoteView = new EditNoteView(_serviceProvider);
-            var deleteNoteView = new DeleteNoteView(_serviceProvider);
-            var deleteNotebookView = new DeleteNotebookView(_serviceProvider);
+            var noteSearchResultView = _serviceProvider.GetService<NoteSearchResultView>();
+            var noteSearchedDetailView = _serviceProvider.GetService<NoteSearchedDetailView>();
+            var createNoteView = _serviceProvider.GetService<CreateNoteView>();
+            var editNoteView = _serviceProvider.GetService<EditNoteView>();
+            var deleteNoteView = _serviceProvider.GetService<DeleteNoteView>();
+            var deleteNotebookView = _serviceProvider.GetService<DeleteNotebookView>();
+
+            if (notebookListView == null || createNotebookView == null || notebookNotesView == null ||
+                editNotebookView == null || noteSearchResultView == null || noteSearchedDetailView == null ||
+                createNoteView == null || editNoteView == null || deleteNoteView == null || deleteNotebookView == null) 
+            {
+                AnsiConsole.Write(new Markup("[red]Problema al iniciar aplicacion[/]"));
+                return;
+            }
 
             ViewData viewSelected = homeView.ShowView();
             

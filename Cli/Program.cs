@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Cli.Application;
+using Cli.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Services;
@@ -26,6 +27,16 @@ namespace Cli {
             services.AddScoped<CreateNote>();
             services.AddScoped<EditNote>();
             services.AddScoped<DeleteNote>();
+            services.AddScoped<NotebookListView>();
+            services.AddScoped<CreateNotebookView>();
+            services.AddScoped<NotebookNotesView>();
+            services.AddScoped<EditNotebookView>();
+            services.AddScoped<NoteSearchResultView>();
+            services.AddScoped<NoteSearchedDetailView>();
+            services.AddScoped<CreateNoteView>();
+            services.AddScoped<EditNoteView>();
+            services.AddScoped<DeleteNoteView>();
+            services.AddScoped<DeleteNotebookView>();
             IServiceProvider serviceProvider = services.BuildServiceProvider();
 
             var app = new App(serviceProvider);

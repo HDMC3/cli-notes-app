@@ -1,15 +1,14 @@
 using Cli.Application;
 using Cli.Common;
 using Cli.ViewDataTypes;
-using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Spectre.Console;
 
 namespace Cli.Views {
     public class EditNoteView {
-        IServiceProvider _serviceProvider;
-        public EditNoteView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
+        EditNote _editNote;
+        public EditNoteView(EditNote editNote) {
+            _editNote = editNote;
         }
 
         public async Task<ViewData> ShowView(EditNoteViewDataType data) {
@@ -51,18 +50,13 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewData);
             }
 
-            var editNote = _serviceProvider.GetService<EditNote>();
-            
-            if (editNote == null)
-                return new ViewData(ViewCodes.ErrorView);
-
             try
             {
                 await Helpers.StartSpinnerAsync("Guardando...", async (ctx) =>
                     {
                         data.Note.Title = String.IsNullOrWhiteSpace(title) ? data.Note.Title : title;
                         data.Note.Description = String.IsNullOrWhiteSpace(description) ? data.Note.Description : description;
-                        await editNote.Edit(data.Note);
+                        await _editNote.Edit(data.Note);
                     });
                 var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
                 return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);

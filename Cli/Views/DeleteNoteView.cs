@@ -1,15 +1,14 @@
 using Cli.Application;
 using Cli.Common;
 using Cli.ViewDataTypes;
-using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Spectre.Console;
 
 namespace Cli.Views {
     public class DeleteNoteView {
-        IServiceProvider _serviceProvider;
-        public DeleteNoteView(IServiceProvider serviceProvider) {
-            _serviceProvider = serviceProvider;
+        DeleteNote _deleteNote;
+        public DeleteNoteView(DeleteNote deleteNote) {
+            _deleteNote = deleteNote;
         }
 
         public async Task<ViewData> ShowView(DeleteNoteViewDataType data) {
@@ -36,16 +35,11 @@ namespace Cli.Views {
                 return new ViewData(ViewCodes.NoteOptionsViewCode, noteOptionsViewDataType);
             }
 
-            var deleteNote = _serviceProvider.GetService<DeleteNote>();
-
-            if (deleteNote == null) 
-                return new ViewData(ViewCodes.ErrorView);
-
             try
             {
                 await Helpers.StartSpinnerAsync("Elimando...", async (ctx) =>
                     {
-                        await deleteNote.Delete(data.Note);
+                        await _deleteNote.Delete(data.Note);
                     });
                 var notebookNotesViewData = new NotebookNotesViewDataType(data.Notebook);
                 return new ViewData(ViewCodes.NotebookNotesViewCode, notebookNotesViewData);
